@@ -1,0 +1,170 @@
+<style>
+.weui-media-box__hd_in-appmsg {
+  margin-right:.8em;
+  width:80px;
+  height:80px;
+  line-height:80px;
+  text-align:center;
+}
+
+.price {
+  margin-top: 30rpx;
+}
+.discount {
+  margin: 0 30rpx;
+}
+.oldprice {
+  text-decoration: line-through;
+}
+</style>
+
+<template lang="wxml">
+  <view>
+    <!--搜索组件-->
+    <searchbar title="mytitle"></searchbar>
+    <!--主题内容-->
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <navigator url='editgoods' class="weui-panel__hd">编辑</navigator>
+            <view class="weui-panel__bd">
+                <navigator wx:for="{{ goods }}" wx:key="{{ item.id }}" url="/pages/goods-details" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{item.src}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <!--<view class="weui-media-box__title"></view>-->
+                        <view class="weui-media-box__desc">{{item.desc}}</view>
+                        <view class="price">
+                          <text class="weui-media-box__title">{{ item.newPrice }}</text>
+                          <text class="discount">{{ item.discount }}</text>
+                          <text class="oldprice">{{ item.oldPrice }}</text>
+                        </view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </view>
+            <view class="weui-panel__ft">
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                    <view class="weui-cell__bd">查看更多</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!--底部组件-->
+    <endtips></endtips>
+    <!--回到顶部组件-->
+    <totop></totop>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import SearchBar from '../compontents/search_bar'
+  import ToTop from '../compontents/to_top'
+  import EndTips from '../compontents/end_tips'
+  export default class Cart extends wepy.page {
+    onShow() {
+      wx.showShareMenu({
+        withShareTicket: true
+      })
+    }
+    config = {
+      navigationBarTitleText: '产品'
+    }
+    components= {
+      searchbar: SearchBar,
+      totop: ToTop,
+      endtips: EndTips
+    }
+    data = {
+      goods: [
+        {
+          id: 1,
+          src: '/upload/pic_floor01_2@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 2888',
+          discount: '5折',
+          newPrice: '￥ 1888'
+        },
+        {
+          id: 2,
+          src: '/upload/pic_floor01_3@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 2888',
+          discount: '5折',
+          newPrice: '￥ 1888'
+        },
+        {
+          id: 3,
+          src: '/upload/pic_floor01_4@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 1888',
+          discount: '5折',
+          newPrice: '￥ 2888'
+        },
+        {
+          id: 4,
+          src: '/upload/pic_floor01_5@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 1888',
+          discount: '5折',
+          newPrice: '￥ 2888'
+        },
+        {
+          id: 5,
+          src: '/upload/pic_floor01_5@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 1888',
+          discount: '5折',
+          newPrice: '￥ 2888'
+        },
+        {
+          id: 6,
+          src: '/upload/pic_floor01_5@2x.png',
+          desc: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色',
+          oldPrice: '￥ 1888',
+          discount: '5折',
+          newPrice: '￥ 2888'
+        }
+      ]
+    }
+    cartedit () {
+      console.log('编辑商品')
+      wx.showModal({
+        title: '提示',
+        content: '这是一个模态弹窗',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      // wx.showActionSheet({
+      //   itemList: ['A', 'B', 'C'],
+      //   success: function(res) {
+      //     console.log(res.tapIndex)
+      //   },
+      //   fail: function(res) {
+      //     console.log(res.errMsg)
+      //   }
+      // })
+    }
+    cartdel () {
+      console.log('删除商品')
+      wx.showModal({
+        title: '提示',
+        content: '确定删除该商品吗?',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
+  }
+</script>

@@ -1,0 +1,60 @@
+<style>
+.record {
+  padding: 50rpx 40rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+.name {
+  display: inline-block;
+  width: 35%;
+}
+.time {
+  color: #2292C4;
+}
+.price {
+  float: right;
+  font-weight: 700;
+}
+</style>
+
+<template>
+  <view>
+    <view class="record" wx:for="{{ records }}" wx:key="{{ records }}">
+      <text class="name">购买{{ item.pName }}产品</text>
+      <text class="time">{{item.time}}</text>
+      <text class="price">-{{item.price}}元</text>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Consume extends wepy.page {
+  config = {
+    navigationBarTitleText: '消费记录'
+  }
+  data = {
+    records: [
+      {
+        pName: '牛仔裤',
+        time: '2018.5.14 10:15',
+        price: '120'
+      },
+      {
+        pName: 'T恤',
+        time: '2018.5.14 10:15',
+        price: '99'
+      },
+      {
+        pName: '连衣裙',
+        time: '2018.5.14 10:15',
+        price: '180'
+      },
+      {
+        pName: '阔腿裤',
+        time: '2018.5.14 10:15',
+        price: '100'
+      }
+    ]
+  }
+}
+</script>

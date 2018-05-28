@@ -1,0 +1,104 @@
+<style>
+.page,
+.page__bd{
+    height: 100%;
+    box-sizing: border-box;
+}
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    padding-top: 60px;
+    text-align: center;
+}
+.box {
+  margin: 15rpx 60rpx;
+  padding: 50rpx;
+  height: 300rpx;
+  border: 1rpx solid #000;
+  box-sizing: border-box;
+  border-radius: 50rpx;
+}
+.handle{
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 80%;
+}
+.handle .common {
+  display: inline-block;
+  padding: 10rpx;
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: 10rpx;
+}
+.handle .first {
+  margin-right: 30px;
+  background-color: #2292c4;
+  color: #fff;
+  width: 40%;
+}
+.handle .two {
+  width: 30%;
+}
+</style>
+
+<template>
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view hidden="{{activeIndex != 0}}">
+          <view class="box" wx:for="{{ products }}" wx:key="{{item}}">
+            <view>后台数据通过分析发现50位新用户对{{ item }}产品感兴趣，是否进行“一键营销”？</view>
+            <view class="handle">
+              <navigator url='agreement' class="first common">SMS/语音</navigator>
+              <navigator delta="1" open-type="navigateBack" class="two common">否</navigator>
+            </view>
+          </view>
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">选项二的内容</view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">选项三的内容</view>
+      </view>
+    </view>
+  </view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Newrcmd extends wepy.page {
+  // var sliderWidth = 96 // 需要设置slider的宽度，用于计算中间位置
+  config = {
+    navigationBarTitleText: '新客推荐'
+  }
+  data = {
+    tabs: ['新客推荐', '推荐记录', '付费记录'],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+    products: ['nike夏季款', '连衣裙', 'ins女鞋']
+  }
+  onLoad () {
+    var that = this
+    var sliderWidth = 75
+    wx.getSystemInfo({
+      success: function(res) {
+        that.sliderLeft = (res.windowWidth / that.data.tabs.length - sliderWidth) / 2
+        that.sliderOffset = res.windowWidth / that.data.tabs.length * that.data.activeIndex
+      }
+    })
+  }
+  tabClick (e) {
+    this.sliderOffset = e.currentTarget.offsetLeft
+    this.activeIndex = e.currentTarget.id
+  }
+}
+</script>

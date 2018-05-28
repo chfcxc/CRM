@@ -1,0 +1,46 @@
+<style lang="less">
+// 顶部搜索框
+.searchbar {
+  padding: 10rpx 20rpx;
+  background-color: #2292C4;
+}
+.searchbar-in {
+  padding: 10rpx 0;
+  background-color: #fff;
+  border-radius: 5rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchbar-img {
+  width: 33rpx;
+  height:33rpx;
+  margin-right: 10rpx;
+}
+</style>
+
+<template lang="wxml">
+  <!--顶部搜索框-->
+  <navigator class='searchbar' url='/pages/home'>
+    <view class='searchbar-in'>
+      <image class='searchbar-img' src='/images/icon_search@2x.png'></image>
+      <text>搜索</text>
+    </view>
+  </navigator>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class SearchBar extends wepy.component {
+    // props静态传值
+    // props = {
+    //   title: String
+    // }
+    // onLoad () {
+    //   console.log(this.title)
+    // }
+  }
+</script>

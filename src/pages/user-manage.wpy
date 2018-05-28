@@ -1,0 +1,76 @@
+<style lang="less">
+.content {
+  margin-top: 25rpx;
+}
+.integral {
+  margin: 0 40rpx;
+}
+
+</style>
+
+<template lang="wxml">
+  <view class="page__bd">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__bd">
+        <navigator wx:for="{{ user }}" wx:key="{{ item.id }}" url="edit-money" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <image class="weui-media-box__thumb" src="{{item.src}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__desc">用户{{item.phone}}</view>
+              <view class="content">
+                <text class="">余额: {{ item.money }}</text>
+                <text class="integral">积分: {{ item.integral }}</text>
+                <text class="">等级: {{ item.level }}</text>
+              </view>
+            </view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!--底部导航组件-->
+  <!--<Tabar></Tabar>-->
+</template>
+
+<script>
+import wepy from 'wepy'
+// import Tabar from '../compontents/tabar'
+export default class UserManage extends wepy.page {
+  config = {
+    navigationBarTitleText: '用户管理'
+  }
+  data = {
+    user: [
+      {
+        src: '/upload/my_user@2x.png',
+        phone: '17398935046',
+        money: '100',
+        integral: '268',
+        level: '金'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        phone: '17398935046',
+        money: '100',
+        integral: '268',
+        level: '金'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        phone: '17398935046',
+        money: '100',
+        integral: '268',
+        level: '金'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        phone: '17398935046',
+        money: '100',
+        integral: '268',
+        level: '金'
+      }
+    ]
+  }
+}
+</script>

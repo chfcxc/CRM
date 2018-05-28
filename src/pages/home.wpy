@@ -1,0 +1,254 @@
+<style lang="less">
+// 轮播图部分
+.index-swiper {
+  height: 340rpx;
+}
+.index-swiper-img {
+  width: 750rpx;
+  height: 340rpx;
+}
+// 地图
+.shop-map {
+  width: 250rpx;
+  height: 200rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+// 公司简介
+.description {
+  padding: 30rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #ccc;
+  position: relative;
+}
+.des-title {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.des-content {
+  display: block;
+  font-size: 26rpx;
+  width: 100%;
+  height: 350rpx;
+}
+.des-edit {
+  position: absolute;
+  right: 100rpx;
+  bottom: 20rpx;
+}
+.active {
+  background-color:#007ACC;
+  color: #fff;
+}
+// 轮播图的添加删除
+.swiper-handle {
+  position: absolute;
+  right:20rpx;
+  top:20rpx;
+  z-index:1000;
+}
+.swiper-del {
+  margin-left: 30rpx;
+}
+// 电话
+.tel {
+  padding: 20rpx 30rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #ccc;
+}
+.tel-edit {
+  float: right;
+}
+.tel-txt {
+  display: inline-block;
+  width:250rpx;
+  height:41rpx
+}
+
+// 地址
+.ad-edit {
+  margin-left: 100rpx;
+}
+.address {
+  padding: 20rpx 250rpx 0 30rpx;
+}
+.ad-txt {
+  width:425rpx;
+  height:92rpx;
+}
+</style>
+
+<template lang="wxml">
+  <view>
+    <!--<button open-type="getUserInfo">sss</button>-->
+    <!--轮播图部分-->
+    <view>
+      <view class="swiper-handle">
+        <text class="swiper-add" bindtap="chooseimage">添加</text>
+        <text class="swiper-del" bindtap="delswiper">删除</text>
+      </view>
+      <swiper
+        class="index-swiper"
+        indicator-dots="true"
+        autoplay="true"
+        interval="2500"
+        duration="1000"
+        indicator-color="rgba(255, 255, 255, .5)"
+        indicator-active-color="#fff">
+        <swiper-item class="index-swiper-item" wx:for="{{ src }}" wx:key="{{ src }}">
+          <image class="index-swiper-img" src="/upload/{{ item }}"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+    <!--公司简介-->
+    <view class="description">
+      <text class="des-title">公司简介</text>
+      <textarea
+        class="{{ desclass }}"
+        value="{{ value }}"
+        maxlength="-1"
+        disabled="{{ desdisabled }}"
+        focus="true">
+      </textarea>
+      <text class="des-edit" bindtap="editTxt">编辑</text>
+    </view>
+    <!--电话-->
+    <view class="tel">
+      <text>电话：</text>
+      <textarea class="{{ telclass }}" disabled="{{ teldisabled }}" value="{{ telnumber }}"></textarea> 
+      <!--<span bindtap='phone'>拨打</span>-->
+      <text class="tel-edit" bindtap="teledit">编辑</text>
+    </view>
+    <!--地址-->
+    <view class="address">
+      <text>地址：</text>
+      <text class="ad-edit" bindtap="adedit">编辑</text>
+      <textarea class="{{ adclass }}" disabled="{{ addisabled }}" value="{{ address }}"></textarea>
+    </view>
+    <!--公司地理位置-->
+    <map bindtap='mapViewTap' class='shop-map' scale='16'></map>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Home extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页'
+    }
+    // onLoad() {
+    //   console.log('onLoad')
+    // }
+    data = {
+      src: ['banner1.png', 'banner2.png', 'banner3.png'],
+      desdisabled: true,
+      teldisabled: true,
+      addisabled: true,
+      desclass: 'des-content',
+      telclass: 'tel-txt',
+      adclass: 'ad-txt',
+      telnumber: '123456790',
+      address: '北京市朝阳区通惠河畔文化创意产业园1131号君天大厦六层',
+      value: '北京亿美软通科技有限公司( Beijing Emay Softcom Technology Ltd.)是具备国际水准的移动商务平台技术和应用方案提供商。自2001年成立以来，亿美软通始终致力于为国内外企业提供具备国际技术水准的移动商务平台及运营服务。目前，亿美软通已为超过50万家企业提供移动个性客服、移动数据采集、移动高效管理等方面的各类移动商务产品和通讯服务，业务服务覆盖超过7亿手机用户，是中国领先的移动商务服务商。'
+    }
+    onShow() {
+      wx.showShareMenu({
+        withShareTicket: true
+      })
+    }
+    onShareAppMessage(res) {
+      // console.log(res)
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target)
+      }
+      return {
+        title: '转发给朋友',
+        path: '/pages/home',
+        success: function(res) {
+          // 转发成功
+          console.log('成功', res)
+        },
+        fail: function(res) {
+          // 转发失败
+          console.log('失败', res)
+        }
+      }
+    }
+    mapViewTap () {
+      console.log('1')
+      wx.chooseLocation({
+        type: 'gcj02', // 返回可以用于wx.openLocation的经纬度
+        success: function (res) {
+          console.log(res)
+          wx.openLocation({
+            latitude: res.latitude,
+            longitude: res.longitude,
+            scale: 28
+          })
+        }
+      })
+    }
+    phone () {
+      wx.makePhoneCall({
+        phoneNumber: '123456790' // 仅为示例，并非真实的电话号码
+      })
+    }
+    chooseimage () {
+      var that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function(res) {
+          wx.getImageInfo({
+            src: res.tempFilePaths[0],
+            success: function (res) {
+              // console.log(res)
+              // console.log(that.src)
+              that.src.push(res.path)
+              // console.log(res.path)
+              // console.log(that.src)
+            }
+          })
+        }
+      })
+    }
+    delswiper () {
+      console.log('删除指定轮播图片')
+    }
+    editTxt () {
+      console.log(this.desdisabled)
+      if (this.desdisabled === true) {
+        this.desdisabled = false
+        this.teldisabled = true
+        this.addisabled = true
+        this.desclass = 'des-content active'
+        this.telclass = 'tel-txt'
+        this.adclass = 'ad-txt'
+      }
+    }
+    teledit () {
+      if (this.teldisabled === true) {
+        this.desdisabled = true
+        this.teldisabled = false
+        this.addisabled = true
+        this.desclass = 'des-content'
+        this.telclass = 'tel-txt active'
+        this.adclass = 'ad-txt'
+      }
+    }
+    adedit () {
+      if (this.addisabled === true) {
+        this.desdisabled = true
+        this.teldisabled = true
+        this.addisabled = false
+        this.desclass = 'des-content'
+        this.telclass = 'tel-txt'
+        this.adclass = 'ad-txt active'
+      }
+    }
+  }
+</script>

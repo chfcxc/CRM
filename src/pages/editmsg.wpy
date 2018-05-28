@@ -1,0 +1,85 @@
+<style>
+.main {
+  padding: 100rpx 60rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+.content {
+  position: relative;
+  height: 400rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+  margin-bottom: 150rpx;
+  border: 1rpx solid #000;
+}
+.handle{
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 25px;
+  width: 50%;
+}
+.handle .common {
+  display: inline-block;
+  padding: 10rpx;
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: 10rpx;
+}
+.handle .first {
+  margin-right: 30px;
+  background-color: #2292c4;
+  color: #fff;
+  width: 25%;
+}
+.handle .two {
+  width: 25%;
+}
+.edit {
+  position: absolute;
+  right:30rpx;
+  bottom:30rpx;
+  text-decoration: underline;
+}
+.active {
+  background-color:#007ACC;
+  color: #fff;
+}
+textarea {
+  width: 280px;
+}
+</style>
+
+<template>
+  <view class="main">
+    <text class="txt">
+      请在下面编辑您所要发送的内容：
+    </text>
+    <view class="content">
+      <textarea value="{{ msgvalue }}" class="{{msgclass}}" disabled="{{ disabled }}" maxlength="-1"></textarea>
+      <text class="edit" bindtap="edit">编辑</text>
+    </view>
+    <view class="handle">
+      <navigator url='payment' class="first common">发送</navigator>
+      <navigator url='agreement' class="two common">取消</navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Editmsg extends wepy.page {
+  config = {
+    navigationBarTitleText: '编辑短信内容'
+  }
+  data = {
+    disabled: 'true',
+    msgclass: '',
+    msgvalue: '为庆祝阿里巴巴成立14周年，多重好礼强势来袭，各位还在观望的老板们还等什么，现加入既有可能获得1、网销宝两百元现金，产品无限曝光；2、爆款实验室，轻松找到最优产品；3网商宝典-生意经，新增客户独享，优品库免费展示'
+  }
+  edit () {
+    this.disabled = false
+    this.msgclass = 'active'
+  }
+}
+</script>

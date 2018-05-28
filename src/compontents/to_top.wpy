@@ -1,0 +1,43 @@
+<style lang="less">
+.to-top {
+  width: 88rpx;
+  height: 88rpx;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 16rpx;
+  bottom: 90rpx;
+  &-img {
+    width: 24rpx;
+    height: 14rpx;
+  }
+  &-txt {
+    color: #666;
+  }
+}
+</style>
+<template>
+  <view class="to-top" @tap="toTop">
+    <image class="to-top-img" src="/images/arrow_top@2x.png"></image>
+    <text class="to-top-txt">顶部</text>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class ToTop extends wepy.component {
+  methods = {
+    toTop() {
+      // console.log(111)
+      wepy.pageScrollTo({
+        scrollTop: 0, // 滚动到页面的目标位置（单位px）
+        duration: 300 // 滚动动画的时长，默认300ms，单位 ms
+      })
+    }
+  }
+}
+</script>

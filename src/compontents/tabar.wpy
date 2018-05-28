@@ -1,0 +1,55 @@
+<style>
+.weui-tabbar {
+  /*display: flex;
+  justify-content: space-around;*/
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  border-top: 1rpx solid #ccc;
+  padding: 6rpx 0;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.weui-tabbar navigator {
+  width: 33%;
+  display: inline-block;
+}
+.img {
+  width: 50rpx;
+  height: 50rpx;
+}
+.tabmain {
+  margin-top: 205rpx;
+}
+</style>
+
+<template lang="wxml">
+  <view class="tabmain">
+    <view class="weui-tabbar">
+      <navigator url="home" open-type="switchTab">
+        <view class="tabbar__icon">
+          <image class="img" src="/images/icon_home@3x.png" alt=""></image>
+        </view>
+        <text class="">首页</text>
+      </navigator>
+      <navigator url="cart" open-type="switchTab" class="weui-tabbar__itesm">
+        <view class="tabbar__icon">
+          <image class="img" src="/images/icon_cart@3x.png" alt=""></image>
+        </view>
+        <text class="weui-tabbar__label">产品</text>
+      </navigator>
+      <navigator url="register" open-type="switchTab" class="weui-tabbar__item">
+        <view class="tabbar__icon">
+          <image class="img" src="/images/icon_me@3x.png" alt=""></image>
+        </view>
+        <text class="weui-tabbar__label">我的</text>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Tabar extends wepy.component {}
+</script>

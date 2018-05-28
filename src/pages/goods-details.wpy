@@ -1,0 +1,154 @@
+<style>
+/*@import '/style/weui.wxss';*/
+.index-swiper {
+  height: 350rpx;
+}
+.index-swiper-img {
+  width: 750rpx;
+  height: 350rpx;
+}
+.dif {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+.old {
+  text-decoration: line-through;
+}
+.main {
+  padding: 30rpx 40rpx 40rpx 30rpx;
+}
+.desc {
+  margin-top: 30rpx;
+}
+.params {
+  margin: 30rpx 0;
+}
+.discount {
+  margin: 0 40rpx;
+}
+.placeholder{
+    margin: 5px;
+    padding: 0 10px;
+    text-align: center;
+    background-color: #ccc;
+    height: 3em;
+    line-height: 3em;
+    color: #666;
+}
+button {
+  /*position: static;*/
+  border-radius: 0;
+  font-size: 25rpx;
+}
+/*轮播图的添加删除*/
+.swiper-handle {
+  position: absolute;
+  right:20rpx;
+  top:20rpx;
+  z-index:1000;
+}
+.swiper-del {
+  margin-left: 30rpx;
+}
+</style>
+
+<template lang="wxml">
+  <view>
+    <!--轮播图部分-->
+    <view class="swiper-handle">
+      <text class="swiper-add" bindtap="chooseimage">添加</text>
+      <text class="swiper-del" bindtap="delswiper">删除</text>
+    </view>
+    <swiper
+      class="index-swiper"
+      indicator-dots="true"
+      autoplay="true"
+      interval="2500"
+      duration="1000"
+      indicator-color="rgba(255, 255, 255, .5)"
+      indicator-active-color="#fff">
+      <swiper-item  class="index-swiper-item" wx:for="{{ src }}" wx:key="{{ src }}">
+        <image class="index-swiper-img" src="{{ item }}"></image>
+      </swiper-item>
+    </swiper>
+    <!--主体部分-->
+    <view class="main">
+      <text class="dif">{{ name }}\n</text>
+      <view class="desc">
+        <text>{{ description }}\n</text>
+      </view>
+      <view class="params">
+        <text>{{ params }}</text>
+      </view>
+      <text>重量：{{ weight }}\n</text>
+      <text class="dif">{{ newPrice }}</text>
+      <text class="discount">{{ discount }}</text>
+      <text class="old">{{ oldPrice }}</text>
+    </view>
+    <!--收藏咨询部分-->
+     <view class="page__bd page__bd_spacing">
+        <view class="weui-flex">
+            <view class="weui-flex__item" bindtap="openToast"><view class="placeholder">收藏</view></view>
+            <view class="weui-flex__item"><button class="placeholder" open-type="contact">咨询</button></view>
+        </view>
+    </view>
+    <!--底部组件-->
+    <tabar></tabar>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Tabar from '../compontents/tabar'
+export default class GoodsDetails extends wepy.page {
+  config = {
+    navigationBarTitleText: '产品详情'
+  }
+  components= {
+    tabar: Tabar
+  }
+  data = {
+    src: [
+      '/upload/banner4.png',
+      '/upload/banner5.png'
+    ],
+    name: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色 全网通4G 陶瓷手机',
+    description: '小米MIX2S 全面屏游戏手机 6GB+64GB 黑色 全网通4G 陶瓷手机',
+    params: '全面屏/4000mAh大电量/前置柔光自拍/14nm骁龙八核处理器',
+    weight: '0.38kg',
+    oldPrice: '￥1888',
+    discount: '5折',
+    newPrice: '￥2888'
+  }
+  openToast () {
+    wx.showToast({
+      title: '已收藏',
+      icon: 'success',
+      duration: 3000
+    })
+  }
+  chooseimage () {
+    var that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function(res) {
+        wx.getImageInfo({
+          src: res.tempFilePaths[0],
+          success: function (res) {
+            // console.log(res)
+            // console.log(that.src)
+            that.src.push(res.path)
+            // console.log(res.path)
+            // console.log(that.src)
+          }
+        })
+      }
+    })
+  }
+  delswiper () {
+    console.log('删除指定轮播图片')
+  }
+}
+</script>

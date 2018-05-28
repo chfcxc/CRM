@@ -1,0 +1,53 @@
+<style>
+.txt {
+  text-align: center;
+  margin: 100rpx 0;
+}
+.company {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-left: 30rpx;
+  border-top: 1rpx solid #ccc;
+  border-bottom: 1rpx solid #ccc;
+  font-size: 28rpx;
+  margin-bottom: 100rpx;
+}
+</style>
+
+<template>
+  <view>
+    <view class="txt">
+      <rich-text nodes="{{nodes}}"></rich-text>
+      <rich-text nodes="{{nodes2}}"></rich-text>
+    </view>
+    <view class="company">收款方：北京亿美软通科技有限公司</view>
+    <view class="weui-btn-area">
+      <navigator url='successpay'><button class="weui-btn" type="primary">立即支付</button></navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Payment extends wepy.page {
+  config = {
+    navigationBarTitleText: '付款'
+  }
+  data = {
+    nodes: [{
+      name: 'h2',
+      children: [{
+        type: 'text',
+        text: '北京亿美软通科技有限公司'
+      }]
+    }],
+    nodes2: [{
+      name: 'h1',
+      children: [{
+        type: 'text',
+        text: '￥ 5000'
+      }]
+    }]
+  }
+}
+</script>

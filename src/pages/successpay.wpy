@@ -1,0 +1,62 @@
+<style lang="less">
+.txt {
+  text-align: center;
+  /*margin: 60rpx 0;*/
+  margin-top: 150rpx;
+}
+.company {
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-left: 30rpx;
+  border-top: 1rpx solid #ccc;
+  border-bottom: 1rpx solid #ccc;
+  font-size: 28rpx;
+  margin-bottom: 100rpx;
+}
+navigator {
+  width: 100%;
+  height: 100%;
+  background-color: pink;
+}
+.weui-msg__title {
+  font-size: 26rpx;
+  font-weight: 700;
+  margin-top: 14rpx;
+}
+.money {
+  display: block;
+  text-align: center;
+  margin: 60rpx 0;
+}
+</style>
+
+<template lang="wxml">
+  <view>
+    <view class="txt">
+      <icon type="success" size="93"></icon>
+      <view class="weui-msg__title">支付成功！</view>
+    </view>
+    <rich-text class="money" nodes="{{nodes}}"></rich-text>
+    <view class="weui-btn-area">
+      <navigator url='newrcmd'><button class="weui-btn" type="primary">完成</button></navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Successpay extends wepy.page {
+  config = {
+    navigationBarTitleText: '支付完成'
+  }
+  data = {
+    nodes: [{
+      name: 'h1',
+      children: [{
+        type: 'text',
+        text: '￥ 5000'
+      }]
+    }]
+  }
+}
+</script>

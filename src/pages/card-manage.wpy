@@ -1,0 +1,75 @@
+<style>
+.bank-card {
+  width: 100%;
+  height: 360rpx;
+}
+.num {
+  display: block;
+  margin-top: 20rpx;
+  margin-left: 100rpx;
+}
+.page__bd {
+  margin-top: 10rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+.edit {
+  width: 100rpx;
+  height: 40rpx;
+  font-size: 16rpx;
+  margin-right: 50rpx;
+}
+.active {
+  background-color:#007ACC;
+  color: #fff;
+}
+</style>
+
+<template lang="wxml">
+  <view>
+    <view>
+      <image  class="bank-card" src="/images/gold-cart.gif"></image>
+      <text class="num">卡号：12435 45346 5455</text>
+    </view>
+    <view class="page__bd">
+      <text>卡片说明：</text>
+      <textarea value="{{ value }}" class="{{ classes }}" disabled="{{ disabled }}"></textarea>
+    </view>
+    <button class="edit" bindtap="editTxt">编辑</button>
+    <!--底部组件-->
+    <Tabar></Tabar>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Tabar from '../compontents/tabar'
+  export default class CardManage extends wepy.page {
+    config = {
+      navigationBarTitleText: '卡片管理'
+    }
+    components= {
+      Tabar
+    }
+    data = {
+      level: ['金', '银', '普'],
+      index: 0,
+      value: `1、持卡可以享受会员的尊贵服务，消费时请主动出示此卡。\n2、此卡为储值/积分卡，请妥善保管，若有遗失请及时到本店挂失补办。`,
+      disabled: true,
+      classes: ''
+    }
+    bindPickerChange (e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        index: e.detail.value
+      })
+    }
+    editTxt () {
+      console.log(this.disabled)
+      if (this.disabled === true) {
+        this.disabled = false
+        this.classes = 'active'
+      }
+    }
+  }
+</script>

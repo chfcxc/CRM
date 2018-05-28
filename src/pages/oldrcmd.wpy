@@ -1,0 +1,170 @@
+<style>
+.page,
+.page__bd{
+    height: 100%;
+    box-sizing: border-box;
+}
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    /*padding-top: 60px;*/
+    text-align: center;
+}
+.box {
+  margin: 15rpx 60rpx;
+  padding: 50rpx;
+  height: 300rpx;
+  border: 1rpx solid #000;
+  box-sizing: border-box;
+  border-radius: 50rpx;
+}
+.handle{
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 80%;
+}
+.handle .common {
+  display: inline-block;
+  padding: 10rpx;
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: 10rpx;
+}
+.handle .first {
+  margin-right: 30px;
+  background-color: #2292c4;
+  color: #fff;
+  width: 40%;
+}
+.handle .two {
+  width: 30%;
+}
+/*推荐记录 付费记录*/
+.record {
+  padding: 25rpx 40rpx;
+  border-bottom: 1rpx solid #ccc;
+  display: flex;
+  align-items: center;
+}
+.name {
+  display: inline-block;
+  width: 15%;
+}
+.time {
+  color: #2292C4;
+  width: 55%;
+  text-align: right;
+}
+.price {
+  width: 55%;
+  text-align: right;
+}
+</style>
+
+<template>
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view hidden="{{activeIndex != 0}}">
+          <view class="box" wx:for="{{ products }}" wx:key="{{item}}">
+            <view>后台数据通过分析发现50位新用户对{{ item }}产品感兴趣，是否进行“一键营销”？</view>
+            <view class="handle">
+              <navigator url='agreement' class="first common">SMS/语音</navigator>
+              <navigator delta="1" open-type="navigateBack" class="two common">否</navigator>
+            </view>
+          </view>
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <view>
+            <view class="record" wx:for="{{ records }}" wx:key="{{ records }}">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb" src="{{item.src}}" />
+              </view>
+              <text class="name">{{ item.uName }}</text>
+              <text class="time">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+          <view>
+            <view class="record" wx:for="{{ records }}" wx:key="{{ records }}">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb" src="{{item.src}}" />
+              </view>
+              <text class="name">{{ item.uName }}</text>
+              <text class="price">-{{item.price}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Oldrcmd extends wepy.page {
+  // var sliderWidth = 96 // 需要设置slider的宽度，用于计算中间位置
+  config = {
+    navigationBarTitleText: '用户管理'
+  }
+  data = {
+    tabs: ['老客推荐', '推荐记录', '付费记录'],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+    products: ['nike夏季款', '连衣裙', 'ins女鞋'],
+    records: [
+      {
+        src: '/upload/my_user@2x.png',
+        uName: '小张',
+        time: '2018.5.14 10:15',
+        price: '120'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        uName: '小李',
+        time: '2018.5.14 10:15',
+        price: '120'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        uName: '小王',
+        time: '2018.5.14 10:15',
+        price: '120'
+      },
+      {
+        src: '/upload/my_user@2x.png',
+        uName: '哈哈',
+        time: '2018.5.14 10:15',
+        price: '120'
+      }
+    ]
+  }
+  onLoad () {
+    var that = this
+    var sliderWidth = 75
+    wx.getSystemInfo({
+      success: function(res) {
+        that.sliderLeft = (res.windowWidth / that.data.tabs.length - sliderWidth) / 2
+        that.sliderOffset = res.windowWidth / that.data.tabs.length * that.data.activeIndex
+      }
+    })
+  }
+  tabClick (e) {
+    this.sliderOffset = e.currentTarget.offsetLeft
+    this.activeIndex = e.currentTarget.id
+  }
+}
+</script>
